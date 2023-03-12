@@ -1,0 +1,3 @@
+.env
+jupyter_data/*
+.ipynb_checkpoints

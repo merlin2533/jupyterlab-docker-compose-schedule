@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  lab:
+    image: jupyter/base-notebook:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+     - ./notebooks:/notebooks
+     - ./jupyter_data:/home/jovyan
+    ports:
+      - "8888:8888"
+    # entrypoint: service cron start
+    user: root
+    environment:
+      - JUPYTER_ENABLE_LAB=1
+      - NB_USER=jovyan
+      - CHOWN_HOME=yes
+      - CHOWN_HOME_OPTS=-R
+      - NB_UID=2000
+      - NB_GID=2000
+      - CHOWN_EXTRA=/notebooks
+      - CHOWN_EXTRA_OPTS=-R
+    working_dir: "/home/jovyan"
+    command: start-notebook.sh --ServerApp.notebook_dir=/notebooks && service cron start
